@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 80%; }
+      form button { width: 20%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; top: 0}
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+
+  <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    $(function(){
+      var socket = io();
+
+      // on conenct
+      socket.on('connect', function() {
+        console.log('connected');
+      })
+
+      // Send request
+      $('form').submit(function(e){
+        e.preventDefault(); // prevents page reloading
+        var cmd = $('#m').val();
+        socket.emit('cmd', cmd);
+        $('#m').val('');
+        return false;
+      });
+      
+      // Append cmd from any player
+      socket.on('cmd', function(cmd){
+        $('#messages').append($('<li>').text("Command: " + cmd));
+      });
+    
+      // Show output
+      socket.on('output', function(output){
+        $('#messages').append($('<li>').text("Output: " + output));
+      });
+    });
+  </script>
+
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
+</html>
