@@ -2,7 +2,7 @@ from flask import Flask, render_template, session
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-socketio = SocketIO(app,cors_allowed_origins="*")
+socketio = SocketIO(app,cors_allowed_origins="*", engineio_logger=True, logger=True)
 
 # Define session variable
 position = [0,0]
