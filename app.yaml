@@ -1,5 +1,7 @@
 runtime: python39
 
+entrypoint: gunicorn --worker-class eventlet -w 1 module:app
+
 instance_class: B2
 
 manual_scaling:
