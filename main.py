@@ -26,7 +26,7 @@ def exe(x):
 			position[1] = int(ini[1])
 			horizontal = True if ini[2] == 'EAST' or ini[2] == 'WEST' else False
 			positive = True if ini[2] == 'EAST' or ini[2] == 'NORTH' else False
-			started = True
+			started = True 
 	elif x == 'MOVE' and started:
 		if horizontal:
 			position[0] += 1 if positive else -1
@@ -64,4 +64,4 @@ def getDirection(x,y):
 			return 'SOUTH'
 
 if __name__ == '__main__':
-	(app.run(host='127.0.0.1', port=5000, debug=True))
+	socketio.run(app)
